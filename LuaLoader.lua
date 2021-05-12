@@ -1,4 +1,4 @@
-local version = "VERSION 2.46"
+local version = "VERSION 2.47"
 local version_url = "https://raw.githubusercontent.com/Aimware0/LuaLoader/main/version.txt"
 
 -- pasted functions
@@ -53,7 +53,7 @@ local function pprint(...)
 	print("[LuaLoader]", chicken__last_script_loaded__, ...)
 end
 
--- Update
+-- Update & reload
 http.Get(version_url, function(content)
 	if version == string.gsub(content, "[\r\n]", "") then
 		print("[LuaLoader] is up to date")
@@ -63,8 +63,9 @@ http.Get(version_url, function(content)
         old:Write(new_version)
         old:Close()
 		
-		print("[LuaLoader] updated")
+		print("[LuaLoader] updated, reloading")
 		UnloadScript(GetScriptName())
+		RunScript(GetScriptName())
 	end
 end)
 
